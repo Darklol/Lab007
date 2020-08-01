@@ -1,0 +1,13 @@
+insert 8000
+name
+123
+123
+123
+Script Dragon
+123
+BLACK
+no
+execute_script script.txt
+show
+print_unique_killer
+info
