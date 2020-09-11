@@ -33,7 +33,7 @@ public class ServerMain {
                 server.connect(port);
                 server.run();
             } catch (IllegalArgumentException e) {
-                System.out.println("Для запуска введите порт в виде аргумента командной строки!!!");
+                System.out.println("Для запуска введите порт в виде аргумента командной строки!");
             } catch (IOException e) {
                 System.out.println("Проблемы с подключением...");
             }

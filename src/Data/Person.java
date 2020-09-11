@@ -3,6 +3,7 @@ package Data;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Scanner;
@@ -12,7 +13,7 @@ import java.util.Scanner;
  */
 public class Person implements Serializable {
     private String name; //Поле не может быть null, Строка не может быть пустой
-    private java.util.Date birthday; //Поле может быть null
+    private java.time.LocalDate birthday; //Поле может быть null
     private Color eyeColor; //Поле может быть null
     private Color hairColor; //Поле может быть null
 
@@ -25,7 +26,7 @@ public class Person implements Serializable {
      * Стандартный конструктор, который вызывается в конструкторе класса Dragon
      * @param
      */
-    public Person(String name, Date birthday, Color eyeColor, Color hairColor) {
+    public Person(String name, LocalDate birthday, Color eyeColor, Color hairColor) {
         this.name = name;
         this.birthday = birthday;
         this.eyeColor = eyeColor;

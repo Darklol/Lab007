@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Scanner;
 
 public class DragonValidator implements Serializable {
@@ -23,10 +25,10 @@ public class DragonValidator implements Serializable {
     private Person killer; //Поле может быть null
 
 
-    public DragonValidator(){
+    public DragonValidator() {
     }
 
-    public void validate(Scanner sc, PrintStream printStream){
+    public void validate(Scanner sc, PrintStream printStream) {
         boolean wrongInput = true;
         printStream.println("Введите имя дракона:");
         while (wrongInput) {
@@ -129,7 +131,7 @@ public class DragonValidator implements Serializable {
             String temp = sc.nextLine();
             if (temp.trim().equals("yes")) {
                 String name = null;
-                java.util.Date birthday = null;
+                LocalDate birthday = null;
                 Color eyeColor = null;
                 Color hairColor = null;
                 printStream.println("Введите данные убийцы дракона");
@@ -147,12 +149,13 @@ public class DragonValidator implements Serializable {
                 wrongInput = true;
                 while (wrongInput) {
                     temp = sc.nextLine();
-                    if (temp.equals("")){
-                        wrongInput = false;
+                    if (temp.equals("")) {
                         break;
                     }
                     try {
-                        birthday = new SimpleDateFormat("dd-MM-yyyy").parse(temp);
+                        birthday = new SimpleDateFormat("dd-MM-yyyy").parse(temp)
+                                .toInstant().atZone(ZoneId.systemDefault())
+                                .toLocalDate();
                         wrongInput = false;
                     } catch (ParseException | NumberFormatException e) {
                         printStream.println("Неверный формат даты! Попробуйте ввести ещё раз. Формат даты: dd-mm-yyyy");
