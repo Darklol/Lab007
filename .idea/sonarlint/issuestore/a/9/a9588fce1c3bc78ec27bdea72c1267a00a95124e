@@ -1,0 +1,19 @@
+
+N	java:S106M"9Replace this use of System.out or System.err by a logger.(µ„½„
+N	java:S106J"9Replace this use of System.out or System.err by a logger.(‰ƒ°×
+f
+java:S13013"KReplace this "switch" statement by "if" statements to increase readability.(°ªÇüúÿÿÿÿ
+`	java:S1284"LEnd this switch case with an unconditional break, return or throw statement.(¶‰Ê
+M	java:S1064"9Replace this use of System.out or System.err by a logger.(¶‰Ê
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¾©ò¹
+k	java:S116"VRename this field "BUFFER_SIZE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ð®­ž
+N	java:S106<"9Replace this use of System.out or System.err by a logger.(Ì€ôÌ
+<	java:S1313""Add a default case to this switch.(°ªÇüúÿÿÿÿ
+G
+java:S1068",Remove this unused "commands" private field.(žÒš‘øÿÿÿÿ
+7
+java:S1170"!Make this final field static too.(ð®­ž
+S	java:S106H"9Replace this use of System.out or System.err by a logger.(†—àûÿÿÿÿ
+=
+java:S2189/""Add an end condition to this loop.(˜ïˆžÿÿÿÿÿ
+S	java:S106A"9Replace this use of System.out or System.err by a logger.(¶§†ãûÿÿÿÿ

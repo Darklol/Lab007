@@ -131,7 +131,7 @@ public class DragonValidator implements Serializable {
             String temp = sc.nextLine();
             if (temp.trim().equals("yes")) {
                 String name = null;
-                LocalDate birthday = null;
+                Date birthday = null;
                 Color eyeColor = null;
                 Color hairColor = null;
                 printStream.println("Введите данные убийцы дракона");
@@ -153,9 +153,7 @@ public class DragonValidator implements Serializable {
                         break;
                     }
                     try {
-                        birthday = new SimpleDateFormat("dd-MM-yyyy").parse(temp)
-                                .toInstant().atZone(ZoneId.systemDefault())
-                                .toLocalDate();
+                        birthday = new SimpleDateFormat("dd-MM-yyyy").parse(temp);
                         wrongInput = false;
                     } catch (ParseException | NumberFormatException e) {
                         printStream.println("Неверный формат даты! Попробуйте ввести ещё раз. Формат даты: dd-mm-yyyy");

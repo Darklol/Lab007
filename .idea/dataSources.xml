@@ -8,5 +8,11 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://pg:5432/studs</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="postgres@localhost" uuid="1b41fb9b-5ae6-4263-9f13-b40356527394">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/postgres</jdbc-url>
+    </data-source>
   </component>
 </project>

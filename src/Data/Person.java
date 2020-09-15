@@ -1,5 +1,8 @@
 package Data;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,9 +14,10 @@ import java.util.Scanner;
 /**
  * Type Person Class
  */
+@Getter @Setter
 public class Person implements Serializable {
     private String name; //Поле не может быть null, Строка не может быть пустой
-    private java.time.LocalDate birthday; //Поле может быть null
+    private java.util.Date birthday; //Поле может быть null
     private Color eyeColor; //Поле может быть null
     private Color hairColor; //Поле может быть null
 
@@ -26,11 +30,17 @@ public class Person implements Serializable {
      * Стандартный конструктор, который вызывается в конструкторе класса Dragon
      * @param
      */
-    public Person(String name, LocalDate birthday, Color eyeColor, Color hairColor) {
+    public Person(String name, Date birthday, Color eyeColor, Color hairColor) {
         this.name = name;
         this.birthday = birthday;
         this.eyeColor = eyeColor;
         this.hairColor = hairColor;
+    }
+
+    public String getBirthdayInFormat(){
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        return simpleDateFormat.format(birthday);
     }
 
     @Override

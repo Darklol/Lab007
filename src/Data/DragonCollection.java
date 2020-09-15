@@ -1,10 +1,12 @@
 package Data;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Set;
 
 public class DragonCollection {
-    private Hashtable<Long,Dragon> dragons;
+    private Hashtable<Long, Dragon> dragons;
     private final Date creationDate;
 
     public DragonCollection(){

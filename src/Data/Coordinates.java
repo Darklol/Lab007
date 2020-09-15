@@ -9,6 +9,13 @@ public class Coordinates implements Serializable {
     private long x;
     private Long y; //Значение поля должно быть больше -324, Поле не может быть null
 
+    public Coordinates(){};
+
+    public Coordinates(long x, Long y){
+        this.x = x;
+        this.y = y;
+    }
+
     @Override
     public String toString() {
         return "Координаты " +

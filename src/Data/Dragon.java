@@ -1,12 +1,16 @@
 package Data;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Scanner;
 
 /**
  * класс Dragon, элементы этого класса наполняют коллекцию
  */
+@Getter
 public class Dragon implements Comparable<Dragon>, Serializable {
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
@@ -17,6 +21,9 @@ public class Dragon implements Comparable<Dragon>, Serializable {
     private Integer wingspan; //Значение поля должно быть больше 0, Поле может быть null
     private Color color; //Поле не может быть null
     private Person killer; //Поле может быть null
+
+    @Getter @Setter
+    private String owner;
 
     /**
      * Более читабельный вид toString()
@@ -51,6 +58,18 @@ public class Dragon implements Comparable<Dragon>, Serializable {
         wingspan = validator.getWingspan();
         color = validator.getColor();
         killer = validator.getKiller();
+    }
+
+    public Dragon(String name, Coordinates coordinates, LocalDate creationDate,
+                  Integer age, String description, Integer wingspan, Color color, Person killer){
+        this.age = age;
+        this.killer = killer;
+        this.color = color;
+        this.wingspan = wingspan;
+        this.name = name;
+        this.description = description;
+        this.coordinates = coordinates;
+        this.creationDate = creationDate;
     }
 //    public Dragon(long id) {
 //        boolean wrongInput = true;
@@ -170,38 +189,15 @@ public class Dragon implements Comparable<Dragon>, Serializable {
 //        System.out.println("Данные о драконе введены.");
 //    }
 
-    public Long getId() {
-        return id;
+    public boolean hasKiller(){
+        return killer == null ? false : true;
     }
 
-    public String getName() {
-        return name;
+    public String getCreatinoDateInFormat(){
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        return simpleDateFormat.format(creationDate);
     }
-
-    public Person getKiller() {
-        return killer;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Coordinates getCoordinates() {
-        return coordinates;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public Integer getWingspan() {
-        return wingspan;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
     /**
      * Метод, который генерирует значение, по которому сравниваются драконы
      * @return
@@ -252,6 +248,15 @@ public class Dragon implements Comparable<Dragon>, Serializable {
     public void setKiller(Person killer) {
         this.killer = killer;
     }
+
+    public Long getId(){
+        return id;
+    }
+
+    public void setId(Long id){
+        this.id = id;
+    }
+
 
     @Override
     public int compareTo(Dragon o) {

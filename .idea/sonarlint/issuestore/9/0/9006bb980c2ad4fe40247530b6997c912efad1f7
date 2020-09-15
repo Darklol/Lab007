@@ -1,0 +1,12 @@
+
+K
+java:S1128"5Remove this unused import 'java.text.ParseException'.(ñ®ï•
+I
+java:S1128	".Remove this unused import 'java.util.Scanner'.(ÒÜÅ¸úÿÿÿÿ
+H
+java:S1128"+Remove this unused import 'java.util.Date'.(¸…¼ü8í“»ßÇ.
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(˜İ¥ñ
+M
+java:S1128"7Remove this unused import 'java.text.SimpleDateFormat'.(ú¡ÙÛ
+7
+java:S1116"Remove this empty statement.(—¹¤şÿÿÿÿ

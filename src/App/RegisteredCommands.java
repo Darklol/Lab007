@@ -39,6 +39,9 @@ public class RegisteredCommands {
         commandsName.put(new MinByNameCommand().commandName(),new MinByNameCommand());
         commandsName.put(new PrintUniqueKillerCommand().commandName(),new PrintUniqueKillerCommand());
         commandsName.put(new PrintAscendingDescCommand().commandName(),new PrintAscendingDescCommand());
+        commandsName.put(new RegisterCommand().commandName(), new RegisterCommand());
+        commandsName.put(new LoginCommand().commandName(), new LoginCommand());
+        
     }
 
     private void allCommandsWithDragons(){

@@ -3,7 +3,7 @@ package App;
 import Data.Dragon;
 import Data.DragonCollection;
 import Data.DragonValidator;
-import Server.*;
+import Util.DataBaseManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
@@ -19,12 +19,18 @@ public class Receiver {
 
     private DragonCollection collection;
     private DragonValidator validator;
+    private DataBaseManager dataBaseManager;
 
     /**
      * Стандартный конструктор
      * инициализирует коллекцию и выставляет дату
      */
     public Receiver() {
+        collection = new DragonCollection();
+        dataBaseManager = new DataBaseManager();
+    }
+
+    public Receiver(String virtualReceiver) {
         collection = new DragonCollection();
     }
 
@@ -34,7 +40,7 @@ public class Receiver {
     public String help() {
         StringBuilder builder = new StringBuilder("Описание всех доступных команд: \n");
         new RegisteredCommands().getCommandsName().values()
-                .forEach(e -> builder.append(e.commandName() + " : " + e.manual() + "\n"));
+                .forEach(e -> builder.append(e.commandName()).append(" : ").append(e.manual()).append("\n"));
         return builder.toString();
     }
 
@@ -43,10 +49,10 @@ public class Receiver {
      */
     public String info() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Информация о коллекции: \n");
-        builder.append("Коллекция типа: Hashtable\n");
-        builder.append("Дата инициализации: " + collection.getCreationDate() + "\n");
-        builder.append("Количество элементов: " + collection.getCollection().size() + "\n");
+        builder.append("Информация о коллекции: \n")
+                .append("Коллекция типа: Hashtable\n")
+                .append("Дата инициализации: " + collection.getCreationDate() + "\n")
+                .append("Количество элементов: " + collection.getCollection().size() + "\n");
         return builder.toString();
     }
 
@@ -67,11 +73,18 @@ public class Receiver {
      *
      * @param id
      */
+//    public String insert(Long id) {
+//        if (collection.getCollection().isEmpty()) return "Коллекция пуста!";
+//        if (id <= 0) return "ID не может быть меньше нуля!";
+//        if (collection.getCollection().containsKey(id)) return "Дракон с таким ID уже существует!";
+//        collection.getCollection().put(id, new Dragon(validator));
+//        return "Дракон успешно добавлен!";
+//    }
     public String insert(Long id) {
-        if (collection.getCollection().isEmpty()) return "Коллекция пуста!";
-        if (id <= 0) return "ID не может быть меньше нуля!";
-        if (collection.getCollection().containsKey(id)) return "Дракон с таким ID уже существует!";
+        Dragon dragon = new Dragon(validator);
         collection.getCollection().put(id, new Dragon(validator));
+        dragon.setOwner("admin");
+        dataBaseManager.insertDragon(dragon);
         return "Дракон успешно добавлен!";
     }
 
@@ -225,7 +238,7 @@ public class Receiver {
         }
         Scanner scanner = new Scanner(strFileContents);
         String line = new String();
-        String[] argument = new  String[1];
+        String[] argument = new String[1];
         RegisteredCommands commands = new RegisteredCommands();
         Receiver virtualReceiver = new Receiver();
         DragonValidator virtualValidator = new DragonValidator();
@@ -241,20 +254,21 @@ public class Receiver {
         builder.append("Приступаю к выполнению скрипта ").append(path).append("\n");
         while (scanner.hasNextLine()) {
             String[] temp = scanner.nextLine().split("\\s+");
-            if (temp.length>0) line = temp[0];
-            if (temp.length>=2) argument[0] = temp[1];
-            if (commands.getCommandsName().containsKey(line)&&!line.equals("execute_script")){
+            if (temp.length > 0) line = temp[0];
+            if (temp.length >= 2) argument[0] = temp[1];
+            if (commands.getCommandsName().containsKey(line) && !line.equals("execute_script")) {
                 commands.getCommandsName().get(line).setReceiver(virtualReceiver);
-                try {if (commands.getCommandsWithDragons().contains(line)){
+                try {
+                    if (commands.getCommandsWithDragons().contains(line)) {
                         virtualValidator.setId(Long.parseLong(argument[0]));
                         virtualValidator.validate(scanner, new PrintStream(empty));
 
+                    }
+                    builder.append(commands.getCommandsName().get(line).execute(argument));
+                } catch (NoSuchElementException e) {
+                    builder.delete(0, builder.length());
+                    builder.append("Ошибка при добавлении дракона. Скрипт остановлен\n");
                 }
-                builder.append(commands.getCommandsName().get(line).execute(argument));
-            } catch (NoSuchElementException e) {
-                builder.delete(0, builder.length());
-                builder.append("Ошибка при добавлении дракона. Скрипт остановлен\n");
-            }
             }
         }
         builder.append("Выполнение скрипта завершено.\n");
@@ -356,20 +370,48 @@ public class Receiver {
                 .forEach(e -> builder.append(e.toString()).append("\n"));
         return builder.toString();
 
-}
+    }
 
     /**
      * Метод для реализации команды print_field_ascending_description
      */
     public String printFieldAscendDesc() {
         if (collection.getCollection().isEmpty()) return "Коллекция пуста!";
-            StringBuilder builder = new StringBuilder("Вывод полей description всех " +
-                    "драконов в коллекции в порядке возрастания:");
-            collection.getCollection().entrySet()
-                    .stream().map(Map.Entry::getValue)
-                    .map(Dragon::getDescription)
-                    .sorted().forEach(e -> builder.append(e).append("\n"));
-            return builder.toString();
+        StringBuilder builder = new StringBuilder("Вывод полей description всех " +
+                "драконов в коллекции в порядке возрастания:");
+        collection.getCollection().entrySet()
+                .stream().map(Map.Entry::getValue)
+                .map(Dragon::getDescription)
+                .sorted().forEach(e -> builder.append(e).append("\n"));
+        return builder.toString();
+    }
+
+    /**
+     * Регистрация нового пользователя
+     * @param username
+     * @param password
+     * @return
+     */
+    public String testReg(String username, String password){
+        if (dataBaseManager.userRegistration(username, password)){
+            return "Регистрация пройдена успешно!";
+        } else {
+            return "Регистрация не пройдена!";
+        }
+    }
+
+    /**
+     * Авторизация пользователя
+     * @param username
+     * @param password
+     * @return
+     */
+    public String testLogin(String username, String password){
+        if (dataBaseManager.userLogin(username, password)){
+            return "Вход осуществлён!";
+        } else {
+            return "Ошибка входа! Неверный логин или пароль.";
+        }
     }
 
     public void setValidator(DragonValidator validator) {

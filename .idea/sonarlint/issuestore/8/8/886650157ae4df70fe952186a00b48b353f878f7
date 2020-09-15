@@ -1,0 +1,48 @@
+
+{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Ï†¦ıÿÿÿÿ8­ÜüãÇ.
+U
+java:S1068"3Remove this unused "dataBaseManager" private field.(ÅîÙüÿÿÿÿ8²ú’äÇ.
+’
+java:S1319ˆ"oThe return type of this method should be an interface such as "Map" rather than the implementation "Hashtable".(üî‹Úúÿÿÿÿ8ôê„È.
+o
+java:S2095ã"QUse try-with-resources or close this "BufferedInputStream" in a "finally" clause.(ê¨ü8ôê„È.
+o
+java:S2095¨"QUse try-with-resources or close this "BufferedInputStream" in a "finally" clause.(ê¨ü8ôê„È.
+•
+java:S1192P"sDefine a constant instead of duplicating this literal "ID Ğ½Ğµ Ğ¼Ğ¾Ğ¶ĞµÑ‚ Ğ±Ñ‹Ñ‚ÑŒ Ğ¼ĞµĞ½ÑŒÑˆĞµ Ğ½ÑƒĞ»Ñ!" 6 times.(ÔÉ±Ùüÿÿÿÿ8ôê„È.
+‚
+java:S1192:"`Define a constant instead of duplicating this literal "ĞšĞ¾Ğ»Ğ»ĞµĞºÑ†Ğ¸Ñ Ğ¿ÑƒÑÑ‚Ğ°!" 10 times.(Å••Ëÿÿÿÿÿ8ôê„È.
+L
+java:S1066¿"/Merge this if statement with the enclosing one.(œÕ†!8ôê„È.
+M
+java:S1066Ç"/Merge this if statement with the enclosing one.(áğÁ8ôê„È.
+:
+java:S1643­"Use a StringBuilder instead.( Š–8ôê„È.
+:
+java:S1643è"Use a StringBuilder instead.( Š–8ôê„È.
+¥
+java:S2681ö"†This line will not be executed conditionally; only the first line of this 2-line block will be. The rest will execute unconditionally.(©µ·8ôê„È.
+Z
+java:S3655Û"7Call "Optional#isPresent()" before accessing the value.(è‰ïóüÿÿÿÿ8ôê„È.
+t
+java:S1149´"VReplace the synchronized class "Hashtable" by an unsynchronized one such as "HashMap".(ÅÎÕŠ8ôê„È.
+y
+java:S1149ˆ"VReplace the synchronized class "Hashtable" by an unsynchronized one such as "HashMap".(üî‹Úúÿÿÿÿ8ôê„È.
+U	java:S106Œ"9Replace this use of System.out or System.err by a logger.(ı¶ä%8ôê„È.
+V	java:S106›"9Replace this use of System.out or System.err by a logger.(ñßù8ôê„È.
+X
+java:S1854§":Remove this useless assignment to local variable "string".(Ñ¾şÖ8ôê„È.
+u
+java:S3776¦"RRefactor this method to reduce its Cognitive Complexity from 37 to the 15 allowed.(ÔíÕÉûÿÿÿÿ8ôê„È.
+‘
+java:S1130¦"nRemove the declaration of thrown exception 'com.google.gson.JsonSyntaxException' which is a runtime exception.(ÔíÕÉûÿÿÿÿ8ôê„È.
+V	java:S106Î"9Replace this use of System.out or System.err by a logger.(±ûµó8ôê„È.
+V	java:S106Ö"9Replace this use of System.out or System.err by a logger.(ô¡Îí8ôê„È.
+>
+java:S2129ë" Remove this "String" constructor(»æ˜8ôê„È.
+¤
+java:S1186õ"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(è¼Ù§üÿÿÿÿ8ôê„È.
+V	java:S106”"9Replace this use of System.out or System.err by a logger.(î‘‹Ì8ôê„È.
+I
+java:S1481§"+Remove this unused "string" local variable.(Ñ¾şÖ8ôê„È.
+X	java:S125G"<This block of commented-out lines of code should be removed.(Åö‘8ôê„È.

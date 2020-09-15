@@ -1,0 +1,10 @@
+
+R
+java:S1128"0Remove this unused import 'java.util.Hashtable'.(Œ»ÏÊüÿÿÿÿ8äıûÈ.
+
+java:S1319"rThe type of the "collection" object should be an interface such as "Set" rather than the implementation "HashSet".(åƒ›Ô8äıûÈ.
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(˜İ¥ñ
+
+java:S1319"mThe return type of this method should be an interface such as "Set" rather than the implementation "HashSet".(Â‰‡üÿÿÿÿ8ÙËûÈ.
+{
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(–‡¥‰ùÿÿÿÿ8ÂÜúÈ.

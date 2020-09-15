@@ -19,8 +19,10 @@ public class InsertCommand extends Command {
         try {
             return receiver.insert(Long.parseLong(arguments[0]));
         } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return "Неправильный ввод аргумента!";
         }
-        return "Неправильный ввод аргумента!";
+
     }
 
     @Override

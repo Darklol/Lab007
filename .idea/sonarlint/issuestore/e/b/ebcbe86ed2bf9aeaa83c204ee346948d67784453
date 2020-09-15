@@ -1,0 +1,26 @@
+
+L
+java:S1068"/Remove this unused "USERS_TABLE" private field.(ô³­”8Ï‡‹È.
+U	java:S106$"9Replace this use of System.out or System.err by a logger.(ÅÖÏ8¿™…ãÇ.
+U	java:S106)"9Replace this use of System.out or System.err by a logger.(²Â×8¿™…ãÇ.
+Z	java:S106'"9Replace this use of System.out or System.err by a logger.(‘ˆŒôşÿÿÿÿ8¿™…ãÇ.
+K
+java:S1068/"/Remove this unused "passEncoder" private field.(õ«8Ï‡‹È.
+u
+java:S3008"SRename this field "PASSWORD" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ìôÍ–ûÿÿÿÿ8¿™…ãÇ.
+d
+java:S2095M"GUse try-with-resources or close this "ResultSet" in a "finally" clause.(„‡–8ÏïîÈ.
+c
+java:S2095F"GUse try-with-resources or close this "!Unknown!" in a "finally" clause.(ª­°H8ÏïîÈ.
+T
+java:S1128"2Remove this unused import 'Data.DragonCollection'.(õ©¡Ÿşÿÿÿÿ8±ñÈ.
+P
+java:S1068".Remove this unused "TABLE_NAME" private field.(¨Ğôªùÿÿÿÿ8ÏïîÈ.
+O
+java:S4925&"-Remove this "Class.forName()", it is useless.(õ†¨Äùÿÿÿÿ8¿™…ãÇ.
+U	java:S1066"9Replace this use of System.out or System.err by a logger.(˜¿äş8¿™…ãÇ.
+g
+java:S1128"ERemove this unused import 'java.util.concurrent.CopyOnWriteArraySet'.(Üñí¡úÿÿÿÿ8ÏïîÈ.
+{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Ï†¦ıÿÿÿÿ8Òñ…ãÇ.
+u
+java:S3008"SRename this field "USERNAME" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ªµ¬Óüÿÿÿÿ8¿™…ãÇ.

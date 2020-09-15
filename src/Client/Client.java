@@ -1,9 +1,8 @@
 package Client;
 
-import App.Receiver;
 import App.Request;
 import App.Response;
-import App.SerializationManager;
+import Util.SerializationManager;
 import Data.DragonValidator;
 import App.RegisteredCommands;
 
