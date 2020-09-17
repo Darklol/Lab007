@@ -7,9 +7,8 @@ import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.Date;
 
 public class DataBaseManager {
 
@@ -48,7 +47,6 @@ public class DataBaseManager {
 
     public DataBaseManager(String dbUrl, String user, String pass) {
         try {
-            System.out.println("Username: "+ USERNAME + "\nPassword: "+ PASSWORD);
             connection = DriverManager.getConnection(dbUrl, user, pass);
             passEncoder = new PassEncoder(PEPPER);
         } catch (SQLException e) {
@@ -66,21 +64,17 @@ public class DataBaseManager {
     }
 
     //загрузка коллекции в память
-    public Set<Dragon> collectionDownload() throws SQLException {
+    public Map<Long, Dragon> collectionDownload() throws SQLException {
         PreparedStatement statement =
                 connection.prepareStatement("SELECT * FROM " + TABLE_NAME + " ds\n" +
-                        "    inner join coordinates dc\n" +
-                        "on ds.id = dc.dragon_id\n" +
                         "    left outer join dragon_killers dk\n" +
                         "    on dk.dragon_id = ds.id\n");
         ResultSet resultSet = statement.executeQuery();
-        HashSet<Dragon> hs = new HashSet<>();
+        Hashtable<Long, Dragon> collection = new Hashtable<Long, Dragon>();
         while (resultSet.next()) {
             long id = resultSet.getLong("id");
-            String name = resultSet.getString("dragon_name");
+            String name = resultSet.getString("name");
             LocalDate date = resultSet.getDate("creation_date")
-                    .toInstant()
-                    .atZone(ZoneId.systemDefault())
                     .toLocalDate();
             ;
             int age = resultSet.getInt("age");
@@ -89,23 +83,36 @@ public class DataBaseManager {
                     getString("color"));
             String owner = resultSet.getString("owner");
             String description = resultSet.getString("description");
-            Coordinates coordinates = new Coordinates(resultSet.getInt("coordinate_x"),
-                    resultSet.getLong("coordinate_y"));
+            Array simple_coordinates = resultSet.getArray("coordinates");
+            Long[] array = (Long[])simple_coordinates.getArray();
+            Coordinates coordinates = new Coordinates(array[0],array[1]);
             Person person = null;
             if (resultSet.getString("killer") != null) {
-                person = new Person(
-                        resultSet.getString("killer"),
-                        resultSet.getDate("birthday"),
-                        Enum.valueOf(Color.class, resultSet.getString("eyecolor")),
-                        Enum.valueOf(Color.class, resultSet.getString("haircolor")));
-
+                person = new Person();
+                String person_name = resultSet.getString("name");
+                try {
+                    person.setBirthday(resultSet.getDate("birthday"));
+                } catch (NullPointerException e) {
+                    person.setBirthday(null);
+                }
+                try {
+                    person.setEyeColor(Enum.valueOf(Color.class, resultSet.getString("eyecolor")));
+                } catch (NullPointerException e) {
+                    person.setEyeColor(null);
+                }
+                try {
+                    person.setHairColor(Enum.valueOf(Color.class, resultSet.getString("haircolor")));
+                } catch (NullPointerException e) {
+                    person.setHairColor(null);
+                }
             }
+
             Dragon dragon = new Dragon(name, coordinates, date, age, description, wingspan, color, person);
             dragon.setOwner(owner);
             dragon.setId(id);
-            hs.add(dragon);
+            collection.put(dragon.getId(),dragon);
         }
-        return (Collections.synchronizedSet(hs));
+        return (Collections.synchronizedMap(collection));
     }
 
 
@@ -113,21 +120,19 @@ public class DataBaseManager {
     public void insertDragon(Dragon dragon) {
         try {
             String state = "INSERT INTO "
-                    + TABLE_NAME + "(name, creation_date, age, description, wingspan, color, killer)\n" +
+                    + TABLE_NAME + "(name, creation_date, age, description, wingspan, color, killer, owner, coordinates)\n" +
                     "VALUES " +
                     "('" + dragon.getName() + "', " +
                     "'" + dragon.getCreationDate() +
-                    "', '" + dragon.getAge() +
-                    "', '" + dragon.getDescription() +
-                    "', '" + dragon.getWingspan() +
-                    "', '" + dragon.getColor().toString() +
-                    "', '" + (dragon.hasKiller() ? dragon.getKiller().getName() : null) + "')";
+                    "', " + (dragon.getAge() == null? "NULL":dragon.getAge()) +
+                    ", '" + dragon.getDescription() +
+                    "', " + (dragon.getWingspan() == null ?"NULL":dragon.getWingspan()) +
+                    ", '" + dragon.getColor().toString() +
+                    "', '" + (dragon.hasKiller() ? dragon.getKiller().getName() : null) +
+                    "', '" + dragon.getOwner() +
+                    "', '{"+dragon.getCoordinates().getX()+","+dragon.getCoordinates().getY()+"}')";
             PreparedStatement dragonItself = connection.prepareStatement(state);
             dragonItself.executeUpdate();
-            PreparedStatement dragonCoords = connection.prepareStatement("INSERT INTO coordinates(dragon_id,coordinate_x,coordinate_y)" +
-                    "VALUES (currval('dragons_id_seq'), " + dragon.getCoordinates().getX() + ", "
-                    + dragon.getCoordinates().getY() + ")");
-            dragonCoords.executeUpdate();
 
             Person killer = dragon.getKiller();
             if (killer != null) {
@@ -147,51 +152,28 @@ public class DataBaseManager {
 
     // Добавление нового пользователя
 
-    public Boolean userRegistration(String login, String password){
-        try {
+    public void userRegistration(UserValidator user) throws SQLException{
             PreparedStatement registration = connection.prepareStatement("INSERT INTO " +
-                    USERS_TABLE + "(username, password)\n "+
+                    USERS_TABLE + " (username, password)\n"+
                     "VALUES "+
-                    "('"+login + "' , '" + passEncoder.getHash(password) + "')");
-            return registration.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
+                    "('" + user.getUsername() + "' , '" + passEncoder.getHash(user.getPassword()) + "')");
+            registration.executeUpdate();
     }
 
     //вход для зарегистрированных пользователей
-    public Boolean userLogin(String username, String password){
+    public boolean userLogin(UserValidator user){
         try {
-            PreparedStatement login = connection.prepareStatement("SELECT EXISTS" +
-                    "(SELECT (username, password) FROM " + USERS_TABLE + " WHERE " +
-                    "('"+ username + "', '" + passEncoder.getHash(password)+"')");
-            return login.execute();
+            PreparedStatement login = connection.prepareStatement("SELECT * FROM "
+                     + USERS_TABLE + " WHERE username = ? and password = ?");
+            login.setString(1, user.getUsername());
+            login.setString(2, passEncoder.getHash(user.getPassword()));
+
+            return login.executeQuery().next();
 
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
-
-    //удаление элемента по id
-
-
-    //добавление нового пользователя
-
-
-    //ищем пользователя
-
-
-    //ищем пользователя только по имени
-
-
-    //генерируем id с помощью sequence
-
-
-    //удаляем все элементы, принадлежащие пользователю
-
-
-    //обновляем поля элемента
 
 }

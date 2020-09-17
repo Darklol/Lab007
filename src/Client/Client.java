@@ -2,9 +2,11 @@ package Client;
 
 import App.Request;
 import App.Response;
+import Commands.Command;
 import Util.SerializationManager;
 import Data.DragonValidator;
 import App.RegisteredCommands;
+import Util.UserValidator;
 
 import java.io.IOException;
 import java.net.*;
@@ -21,6 +23,7 @@ public class Client {
     private RegisteredCommands commands;
     private DatagramSocket socket;
     private SocketAddress socketAddress;
+    private UserValidator user = null;
     public final int BUFFER_SIZE = 65536;
     private boolean isConnected;
 
@@ -28,9 +31,6 @@ public class Client {
      * стандартный конструктор, устанавливающий экземпляр ресивера и инициализирующий коллекцию команд
      * @param
      */
-    public Client(){
-        commands = new RegisteredCommands();
-    }
 
     public void connect(String host, int port) throws IOException {
         try {
@@ -60,23 +60,34 @@ public class Client {
         System.arraycopy(input, 1, arguments, 0, arguments.length);
         if (input[0].equals("exit")) {
             System.out.println("Завершение работы клиента.");
+            Request exit_request = new Request(null,null);
+            byte[] requestInBytes = SerializationManager.writeObject(exit_request);
+            DatagramPacket packet = new DatagramPacket(requestInBytes, requestInBytes.length, socketAddress);
+            socket.send(packet);
             System.exit(0);
         }
-        if (!commands.getCommandsName().containsKey(input[0])){
+        if (!RegisteredCommands.getCommandsName().containsKey(input[0])){
             System.out.println("Такой команды не существует. Проверьте правильность ввода команды.");
             return;}
         DragonValidator validator = new DragonValidator();
-        validator.setId((long)-1);
-        if (commands.getCommandsWithDragons().contains(input[0])
-                && arguments.length>0) {
+        if (RegisteredCommands.getCommandsWithDragons().contains(input[0])) {
             try {
-                validator.setId(Long.parseLong(arguments[0]));
                 validator.validate(new Scanner(System.in), System.out);
             } catch (IllegalArgumentException e) {
+                System.out.println("Что-то пошло не так...");
             }
         }
-        Request request = new Request(commands.getCommandsName().get(input[0]), arguments);
-        if (!validator.getId().equals((long)-1)) request.setValidator(validator);
+        if (RegisteredCommands.getAuthorizationCommands().contains(input[0])){
+            System.out.println("Введите имя пользователя: ");
+            String username = scanner.nextLine();
+            System.out.println("Введите пароль");
+            String password = scanner.nextLine();
+            user = new UserValidator(username, password);
+        }
+        Command command = RegisteredCommands.getCommandsName().get(input[0]);
+        command.setUsername(user);
+        Request request = new Request(command, arguments);
+        request.setValidator(validator);
         byte[] requestInBytes = SerializationManager.writeObject(request);
         DatagramPacket packet = new DatagramPacket(requestInBytes, requestInBytes.length, socketAddress);
         socket.send(packet);
@@ -87,6 +98,9 @@ public class Client {
         Response response = SerializationManager.readObject(answerInBytes);
         System.out.println("Получен ответ от сервера: ");
         System.out.println(response.getAnswer());
+        if (response.getAnswer().equals("Ошибка входа! Неверный логин или пароль.")
+                || response.getAnswer().equals("Пользователь с таким именем уже зарегистрирован!"))
+            user = null;
     } catch (IOException e) {
         System.out.println("Сервер в данный момент недоступен...");
         isConnected = socket.isConnected();

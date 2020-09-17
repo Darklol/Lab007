@@ -6,16 +6,12 @@ import App.Receiver;
  *  Команда update
  */
 public class UpdateCommand extends Command {
-    public UpdateCommand(){}
-    public UpdateCommand(Receiver receiver) {
-        super(receiver);
-    }
 
     @Override
     public String execute(String[] arguments) {
         if (arguments.length<needArguments()) return "У команды должны быть аргументы!";
         try {
-            return receiver.update(Long.parseLong(arguments[0]));
+            return receiver.update(Long.parseLong(arguments[0]),user);
         } catch (IllegalArgumentException e) {
         }
         return "Неправильный ввод аргумента!";

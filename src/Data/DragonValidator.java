@@ -1,6 +1,8 @@
 package Data;
 
 import com.sun.istack.internal.Nullable;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -23,6 +25,9 @@ public class DragonValidator implements Serializable {
     private Integer wingspan; //Значение поля должно быть больше 0, Поле может быть null
     private Color color; //Поле не может быть null
     private Person killer; //Поле может быть null
+
+    @Getter @Setter
+    private String  ownerName;
 
 
     public DragonValidator() {

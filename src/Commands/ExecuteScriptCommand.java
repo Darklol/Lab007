@@ -8,16 +8,12 @@ import java.io.IOException;
  * Команда execute
  */
 public class ExecuteScriptCommand extends Command{
-    public ExecuteScriptCommand(){};
-    public ExecuteScriptCommand(Receiver receiver) {
-        super(receiver);
-    }
 
     @Override
     public String execute(String[] arguments) {
         if (arguments.length<needArguments()) return "У команды должны быть аргументы!";
         try {
-            return receiver.executeScript(arguments[0]);
+            return receiver.executeScript(arguments[0], user);
         } catch (IllegalArgumentException e) {
         } catch (IOException e){
         }

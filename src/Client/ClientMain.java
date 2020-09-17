@@ -1,6 +1,10 @@
 package Client;
 
+import Data.Dragon;
+import Data.DragonValidator;
+
 import java.io.IOException;
+import java.util.Scanner;
 
 public class ClientMain {
 

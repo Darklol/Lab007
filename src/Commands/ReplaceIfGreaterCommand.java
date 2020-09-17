@@ -1,21 +1,19 @@
 package Commands;
 
 import App.Receiver;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 /**
  *  Команда replace_if_greater
  */
 public class ReplaceIfGreaterCommand extends Command {
-    public ReplaceIfGreaterCommand(){}
-    public ReplaceIfGreaterCommand(Receiver receiver) {
-        super(receiver);
-    }
 
     @Override
     public String execute(String[] arguments) {
         if (arguments.length<needArguments()) return "У команды должны быть аргументы!";
         try {
-            return receiver.replaceGreater(Long.parseLong(arguments[0]));
+            return receiver.replaceGreater(Long.parseLong(arguments[0]), user);
         } catch (IllegalArgumentException e) {
         }
         return "Неправильный ввод аргумента!";

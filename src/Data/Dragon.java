@@ -40,7 +40,8 @@ public class Dragon implements Comparable<Dragon>, Serializable {
                 "Описание:" + description + "\n" +
                 "Размах крыльев:" + wingspan + "\n" +
                 "Цвет:" + color + "\n" +
-                "Убийца:" + killer + "\n";
+                "Убийца:" + killer + "\n\n" +
+                "Владелец: " + owner;
     }
 
     /**
@@ -58,6 +59,7 @@ public class Dragon implements Comparable<Dragon>, Serializable {
         wingspan = validator.getWingspan();
         color = validator.getColor();
         killer = validator.getKiller();
+        owner = validator.getOwnerName();
     }
 
     public Dragon(String name, Coordinates coordinates, LocalDate creationDate,
@@ -206,47 +208,19 @@ public class Dragon implements Comparable<Dragon>, Serializable {
         return (id - age + 42);
     }
 
-    public void setCoordinates() {
-        coordinates = new Coordinates();
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     /**
      * Устанавливает дату создания дракона на текущую
      */
-    public void setCreationDate() {
-        this.creationDate = LocalDate.now();
-    }
-
-    public void setCreationDate(LocalDate date) {
-        this.creationDate = date;
-    }
+//    public void setCreationDate() {
+//        this.creationDate = LocalDate.now();
+//    }
+//
+//    public void setCreationDate(LocalDate date) {
+//        this.creationDate = date;
+//    }
 
     public LocalDate getCreationDate() {
         return creationDate;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setWingspan(Integer wingspan) {
-        this.wingspan = wingspan;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
-    public void setKiller(Person killer) {
-        this.killer = killer;
     }
 
     public Long getId(){
@@ -257,6 +231,17 @@ public class Dragon implements Comparable<Dragon>, Serializable {
         this.id = id;
     }
 
+    public Integer getAge() {
+        return age;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Integer getWingspan() {
+        return wingspan;
+    }
 
     @Override
     public int compareTo(Dragon o) {

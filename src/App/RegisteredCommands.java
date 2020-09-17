@@ -2,29 +2,25 @@ package App;
 
 import App.Receiver;
 import Commands.*;
+import lombok.Getter;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * класс, содержащий в себе все доступные команды
+ * хранит соответствия команда-имя
+ */
 public class RegisteredCommands {
 
-    private HashMap<String, Command> commandsName = new HashMap<String,Command>();
-    private Set<String> commandsWithDragons = new HashSet<>();
+    private static HashMap<String, Command> commandsName = new HashMap<String,Command>();
+    private static Set<String> commandsWithDragons = new HashSet<>();
+    private static Set<String> authorizationCommands = new HashSet<>();
     private Receiver receiver;
-    /**
-     * Метод, инициализирующий коллекцию HashMap, с ключом - командой в строковом представлении,
-     * и со значением - экземпляр команды
-     */
-    public RegisteredCommands(){
-        addCommandsNames();
-        allCommandsWithDragons();
-    }
 
-
-
-    private void addCommandsNames(){
+    static {
         commandsName.put(new HelpCommand().commandName(), new HelpCommand());
         commandsName.put(new InfoCommand().commandName(),new InfoCommand());
         commandsName.put(new ShowCommand().commandName(),new ShowCommand());
@@ -41,20 +37,24 @@ public class RegisteredCommands {
         commandsName.put(new PrintAscendingDescCommand().commandName(),new PrintAscendingDescCommand());
         commandsName.put(new RegisterCommand().commandName(), new RegisterCommand());
         commandsName.put(new LoginCommand().commandName(), new LoginCommand());
-        
-    }
 
-    private void allCommandsWithDragons(){
         commandsWithDragons.add("replace_if_greater");
         commandsWithDragons.add("update");
         commandsWithDragons.add("insert");
+
+        authorizationCommands.add("register");
+        authorizationCommands.add("login");
     }
 
-    public HashMap<String, Command> getCommandsName() {
+    public static HashMap<String, Command> getCommandsName() {
         return commandsName;
     }
 
-    public Set<String> getCommandsWithDragons() {
+    public static Set<String> getCommandsWithDragons() {
         return commandsWithDragons;
+    }
+
+    public static Set<String> getAuthorizationCommands() {
+        return authorizationCommands;
     }
 }

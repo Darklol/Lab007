@@ -6,16 +6,12 @@ import App.Receiver;
  *  Команда remove_if_greater_key
  */
 public class RemoveGreaterKeyCommand extends Command {
-    public RemoveGreaterKeyCommand(){}
-    public RemoveGreaterKeyCommand(Receiver receiver) {
-        super(receiver);
-    }
 
     @Override
     public String execute(String[] arguments) {
         if (arguments.length<needArguments()) return "У команды должны быть аргументы!";
         try {
-            return receiver.removeGreaterKey(Long.parseLong(arguments[0]));
+            return receiver.removeGreaterKey(Long.parseLong(arguments[0]), user);
         } catch (IllegalArgumentException e) {
         }
         return "Неправильный ввод аргумента!";

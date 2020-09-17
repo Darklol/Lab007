@@ -6,15 +6,11 @@ import App.Receiver;
  *  Команда min_by_name
  */
 public class MinByNameCommand extends Command {
-    public MinByNameCommand(){}
-    public MinByNameCommand(Receiver receiver) {
-        super(receiver);
-    }
 
     @Override
     public String execute(String[] arguments) {
         if (arguments.length<needArguments()) return "У команды должны быть аргументы!";
-        return receiver.minByName();
+        return receiver.minByName(user);
     }
 
     @Override

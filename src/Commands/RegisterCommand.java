@@ -1,26 +1,18 @@
 package Commands;
 
 import App.Receiver;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.util.Scanner;
 
 public class RegisterCommand extends Command{
-    public RegisterCommand(){}
-    public RegisterCommand(Receiver receiver) {
-        super(receiver);
-    }
 
     @Override
     public String execute(String[] arguments) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Введите имя пользователя:\n");
-        String username = scanner.nextLine();
-        System.out.println("Введите пароль:\n");
-        String password = scanner.nextLine();
         try {
-            return receiver.testReg(username,password);
+            return receiver.registration(user);
         } catch (IllegalArgumentException e) {
-            e.printStackTrace();
             return "Неправильный ввод аргумента!";
         }
 

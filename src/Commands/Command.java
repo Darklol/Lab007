@@ -2,6 +2,7 @@ package Commands;
 
 import App.Receiver;
 import Data.DragonValidator;
+import Util.UserValidator;
 
 import java.io.Serializable;
 
@@ -15,13 +16,15 @@ public abstract class Command implements Serializable {
      * определяет общее поведение всех команд
      */
     protected Receiver receiver;
+    protected UserValidator user;
 
     public abstract String execute(String[] arguments);
 
     public Command(){};
 
-    public Command(Receiver receiver) {
+    public Command(Receiver receiver, UserValidator user) {
         this.receiver = receiver;
+        this.user = user;
     }
 
     /**
@@ -48,5 +51,13 @@ public abstract class Command implements Serializable {
 
     public void setReceiver(Receiver receiver) {
         this.receiver = receiver;
+    }
+
+    public UserValidator getUser() {
+        return user;
+    }
+
+    public void setUsername(UserValidator user) {
+        this.user = user;
     }
 }

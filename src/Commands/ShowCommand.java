@@ -6,14 +6,10 @@ import App.Receiver;
  *  Команда show
  */
 public class ShowCommand extends Command {
-    public ShowCommand(){}
-    public ShowCommand(Receiver receiver) {
-        super(receiver);
-    }
 
     @Override
     public String execute(String[] arguments) {
-        return receiver.show();
+        return receiver.show(user);
     }
 
     @Override

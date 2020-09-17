@@ -1,19 +1,17 @@
 package Commands;
 
 import App.Receiver;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 /**
  *  Команда clear
  */
 public class ClearCommand extends Command {
-    public ClearCommand(){}
-    public ClearCommand(Receiver receiver) {
-        super(receiver);
-    }
 
     @Override
     public String execute(String[] arguments) {
-        return receiver.clear();
+        return receiver.clear(user);
     }
 
     @Override

@@ -8,16 +8,12 @@ import java.io.IOException;
  *  Команда insert
  */
 public class InsertCommand extends Command {
-    public InsertCommand(){}
-    public InsertCommand(Receiver receiver) {
-        super(receiver);
-    }
 
     @Override
     public String execute(String[] arguments) {
         if (arguments.length<needArguments()) return "У команды должны быть аргументы!";
         try {
-            return receiver.insert(Long.parseLong(arguments[0]));
+            return receiver.insert(user);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
             return "Неправильный ввод аргумента!";
@@ -27,7 +23,7 @@ public class InsertCommand extends Command {
 
     @Override
     public int needArguments() {
-        return 1;
+        return 0;
     }
 
     @Override

@@ -6,14 +6,10 @@ import App.Receiver;
  *  Команда help
  */
 public class HelpCommand extends Command {
-    public HelpCommand(){}
-    public HelpCommand(Receiver receiver) {
-        super(receiver);
-    }
 
     @Override
     public String execute(String[] arguments) {
-        return receiver.help();
+        return receiver.help(user);
     }
 
     @Override

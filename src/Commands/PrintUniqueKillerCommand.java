@@ -6,14 +6,10 @@ import App.Receiver;
  *  Команда print_unique_killer
  */
 public class PrintUniqueKillerCommand extends Command {
-    public PrintUniqueKillerCommand(){}
-    public PrintUniqueKillerCommand(Receiver receiver) {
-        super(receiver);
-    }
 
     @Override
     public String execute(String[] arguments) {
-        return receiver.printUniqueKiller();
+        return receiver.printUniqueKiller(user);
     }
 
     @Override

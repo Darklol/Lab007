@@ -1,24 +1,21 @@
 package Data;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Set;
+import java.util.*;
 
 public class DragonCollection {
-    private Hashtable<Long, Dragon> dragons;
+    private HashMap<Long, Dragon> dragons;
     private final Date creationDate;
 
     public DragonCollection(){
         creationDate = new Date();
-        dragons = new Hashtable<Long, Dragon>();
+        dragons = new HashMap<Long, Dragon>();
     }
 
-    public Hashtable<Long, Dragon> getCollection() {
+    public HashMap<Long, Dragon> getCollection() {
         return dragons;
     }
 
-    public void setCollection(Hashtable<Long, Dragon> collection) {
+    public void setCollection(HashMap<Long, Dragon> collection) {
         this.dragons = collection;
     }
 
