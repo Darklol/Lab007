@@ -115,7 +115,7 @@ public class DataBaseManager {
 
 
     //добаление нового элемента
-    public void insertDragon(Dragon dragon) {
+    public Long insertDragon(Dragon dragon) {
         try {
             String state = "INSERT INTO "
                     + TABLE_NAME + "(name, creation_date, age, description, wingspan, color, killer, owner, coordinates)\n" +
@@ -143,11 +143,22 @@ public class DataBaseManager {
                                 ", " + eyeColor + ")");
                 dragonKiller.executeUpdate();
             }
+
+            PreparedStatement getId = connection.prepareStatement("SELECT id " +
+                    "  FROM dragons" +
+                    "  ORDER BY id DESC\n" +
+                    "  LIMIT 1\n");
+            ResultSet resultSet = getId.executeQuery();
+            resultSet.next();
+            return resultSet.getLong("id");
         } catch (SQLException e) {
             System.out.println("Ошибка при добавлении элемента в БД.");
             e.printStackTrace();
+            return (long)0;
         }
     }
+
+
 
     // Добавление нового пользователя
 

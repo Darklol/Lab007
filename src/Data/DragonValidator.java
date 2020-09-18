@@ -20,11 +20,7 @@ public class DragonValidator implements Serializable {
     private Integer wingspan; //Значение поля должно быть больше 0, Поле может быть null
     private Color color; //Поле не может быть null
     private Person killer; //Поле может быть null
-
-    @Getter
-    @Setter
     private String ownerName;
-
 
     public DragonValidator() {
     }
@@ -258,5 +254,13 @@ public class DragonValidator implements Serializable {
 
     public Person getKiller() {
         return killer;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
     }
 }

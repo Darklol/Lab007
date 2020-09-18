@@ -127,7 +127,7 @@ public class Client {
         } catch (ClassNotFoundException e) {
             System.out.println("Клиент ждал ответ в виде Response, а получил что-то непонятное...");
         } catch (NullPointerException e){
-            System.out.println("");
+            System.out.println("Вы не можете отправлять команды на сервер, пока не авторизуетесь.");
         }
 
     }

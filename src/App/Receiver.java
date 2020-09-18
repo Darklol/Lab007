@@ -92,8 +92,10 @@ public class Receiver {
         if (user == null)
             return "Вы не можете выполнять команды без авторизации!";
         Dragon dragon = new Dragon(validator);
-        collection.getCollection().put(validator.getId(), new Dragon(validator));
-        dataBaseManager.insertDragon(dragon);
+        Long id = dataBaseManager.insertDragon(dragon);
+        if (id == 0) return "Дракон не добавлен! Данные повреждены.";
+        validator.setId(id);
+        collection.getCollection().put(id, new Dragon(validator));
         return "Дракон успешно добавлен!";
     }
 
