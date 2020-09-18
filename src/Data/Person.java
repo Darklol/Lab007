@@ -4,12 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
-import java.util.Scanner;
 
 /**
  * Type Person Class
@@ -17,9 +14,9 @@ import java.util.Scanner;
 @Getter @Setter
 public class Person implements Serializable {
     private String name; //Поле не может быть null, Строка не может быть пустой
-    private java.util.Date birthday; //Поле может быть null
-    private Color eyeColor; //Поле может быть null
-    private Color hairColor; //Поле может быть null
+    private java.util.Date birthday = null; //Поле может быть null
+    private Color eyeColor = null; //Поле может быть null
+    private Color hairColor = null; //Поле может быть null
 
     /**
      * Пустой конструктор, нужен для корректного считывания коллекции из файла (костыль)
@@ -38,6 +35,7 @@ public class Person implements Serializable {
     }
 
     public String getBirthdayInFormat(){
+        if (birthday == null) return null;
         String pattern = "yyyy-MM-dd";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         return simpleDateFormat.format(birthday);

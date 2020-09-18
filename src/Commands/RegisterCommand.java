@@ -1,11 +1,5 @@
 package Commands;
 
-import App.Receiver;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
-import java.util.Scanner;
-
 public class RegisterCommand extends Command{
 
     @Override
@@ -25,7 +19,7 @@ public class RegisterCommand extends Command{
 
     @Override
     public String manual() {
-        return "Добавить новый элемент с заданным ключом.";
+        return "Создать новую учётную запись";
     }
 
     @Override

@@ -1,21 +1,22 @@
 package Data;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class DragonCollection {
-    private HashMap<Long, Dragon> dragons;
+    private ConcurrentHashMap<Long, Dragon> dragons;
     private final Date creationDate;
 
     public DragonCollection(){
         creationDate = new Date();
-        dragons = new HashMap<Long, Dragon>();
+        dragons = new ConcurrentHashMap<>();
     }
 
-    public HashMap<Long, Dragon> getCollection() {
+    public ConcurrentHashMap<Long, Dragon> getCollection() {
         return dragons;
     }
 
-    public void setCollection(HashMap<Long, Dragon> collection) {
+    public void setCollection(ConcurrentHashMap<Long, Dragon> collection) {
         this.dragons = collection;
     }
 

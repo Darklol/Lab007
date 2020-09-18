@@ -7,7 +7,6 @@ import Commands.Command;
 import Util.SerializationManager;
 import Util.UserValidator;
 import lombok.AllArgsConstructor;
-
 import java.io.IOException;
 import java.net.SocketAddress;
 import java.nio.channels.DatagramChannel;
@@ -34,6 +33,7 @@ public class HandlerThread extends Thread {
                 result = command.execute(arguments);
                 System.out.println("Команда " + command + " выполнена, посылаю ответ клиенту...");
             } catch (NullPointerException e) {
+                e.printStackTrace();
             }
             Response response = new Response(result);
             new SenderThread(datagramChannel, socketAddress, response).start();

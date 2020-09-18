@@ -3,19 +3,15 @@ package App;
 import Data.Dragon;
 import Data.DragonCollection;
 import Data.DragonValidator;
-import Util.ActiveUsers;
 import Util.DataBaseManager;
 import Util.UserValidator;
-import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
 import lombok.Getter;
 
 import java.io.*;
-import java.lang.reflect.AccessibleObject;
-import java.lang.reflect.Type;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * По шаблону "команда", Ресивер - это класс, который содержит в себе методы для исполнения каждой команды
@@ -47,7 +43,7 @@ public class Receiver {
         if (user == null)
             return "Вы не можете выполнять команды без авторизации!";
         StringBuilder builder = new StringBuilder("Описание всех доступных команд: \n");
-        new RegisteredCommands().getCommandsName().values()
+        RegisteredCommands.getCommandsName().values()
                 .forEach(e -> builder.append(e.commandName()).append(" : ").append(e.manual()).append("\n"));
         return builder.toString();
     }
@@ -184,8 +180,8 @@ public class Receiver {
 
     public void getCollectionFromDataBase() throws SQLException {
         Map<Long, Dragon> map = dataBaseManager.collectionDownload();
-        collection.setCollection((map instanceof HashMap) ?
-                (HashMap) map : new HashMap<Long, Dragon>(map));
+        collection.setCollection((map instanceof ConcurrentHashMap) ?
+                (ConcurrentHashMap<Long, Dragon>) map : new ConcurrentHashMap<Long, Dragon>(map));
     }
 
     /**
@@ -461,11 +457,6 @@ public class Receiver {
     /**
      * Getters and setters
      */
-
-
-    public HashMap<Long, Dragon> getCollection() {
-        return collection.getCollection();
-    }
 
     public void setCollection(DragonCollection collection) {
         this.collection = collection;

@@ -1,10 +1,6 @@
 package Server;
 
 import App.*;
-import Commands.*;
-import Util.SerializationManager;
-import Util.UserValidator;
-
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
@@ -87,6 +83,21 @@ public class Server {
 
     public void run(){
         try {
+            Runnable exit = () ->{
+                try {
+                    while (true){
+                    if (System.in.available()>0) {
+                        if ("exit".equals(new Scanner(System.in).nextLine().trim())) {
+                            System.out.println("Завершение работы сервера");
+                            System.exit(0);
+                        }
+                    }}
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            };
+            Thread exitThread = new Thread(exit);
+            exitThread.start();
             Callable<SocketAddress> task = getTask();
             ExecutorService service = Executors.newCachedThreadPool();
             while (true) {

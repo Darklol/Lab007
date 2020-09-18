@@ -1,7 +1,6 @@
 package Data;
 
 import lombok.Getter;
-
 import java.io.Serializable;
 
 /**

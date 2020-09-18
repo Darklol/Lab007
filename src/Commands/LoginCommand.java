@@ -1,7 +1,5 @@
 package Commands;
 
-import java.util.Scanner;
-
 public class LoginCommand extends Command{
 
     @Override
@@ -21,7 +19,7 @@ public class LoginCommand extends Command{
 
     @Override
     public String manual() {
-        return "Добавить новый элемент с заданным ключом.";
+        return "Войти в учётную запись";
     }
 
     @Override

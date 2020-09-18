@@ -1,9 +1,5 @@
 package Commands;
 
-import App.Receiver;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
 /**
  *  Команда replace_if_greater
  */

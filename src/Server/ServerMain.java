@@ -1,8 +1,6 @@
 package Server;
 
 import App.Receiver;
-import com.google.gson.JsonSyntaxException;
-
 import java.io.IOException;
 import java.sql.SQLException;
 

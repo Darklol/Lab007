@@ -1,17 +1,12 @@
 package Data;
 
-import com.sun.istack.internal.Nullable;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -26,8 +21,9 @@ public class DragonValidator implements Serializable {
     private Color color; //Поле не может быть null
     private Person killer; //Поле может быть null
 
-    @Getter @Setter
-    private String  ownerName;
+    @Getter
+    @Setter
+    private String ownerName;
 
 
     public DragonValidator() {
@@ -38,7 +34,7 @@ public class DragonValidator implements Serializable {
         printStream.println("Введите имя дракона:");
         while (wrongInput) {
             this.name = (sc.nextLine());
-            if (!name.equals("")) {
+            if (!name.equals("") || name.length() > 32) {
                 wrongInput = false;
             } else {
                 printStream.println("Поле не может быть пустым. Попробуйте ещё раз.");
@@ -101,12 +97,12 @@ public class DragonValidator implements Serializable {
         while (wrongInput) {
             try {
                 String temp = sc.nextLine();
-                if (!temp.equals("")) {
+                if (!temp.equals("") || temp.length() > 64) {
                     this.wingspan = Integer.parseInt(temp);
                     if (wingspan > 0) {
                         wrongInput = false;
                     } else {
-                        printStream.println("Значение поля должно быть больше 0 либо null! Попробуйте ввести ещё раз.");
+                        printStream.println("Неправильно введено значение! Попробуйте ввести ещё раз.");
                     }
                 } else {
                     wingspan = null;
@@ -143,10 +139,10 @@ public class DragonValidator implements Serializable {
                 printStream.println("Введите имя человека:");
                 while (wrongInput) {
                     name = (sc.nextLine());
-                    if (!name.equals("")) {
+                    if (!name.equals("") || name.length() > 20) {
                         wrongInput = false;
                     } else {
-                        printStream.println("Поле не может быть пустым. Попробуйте ещё раз.");
+                        printStream.println("Неправильный ввод. Попробуйте ещё раз.");
                     }
                 }
                 printStream.println();
