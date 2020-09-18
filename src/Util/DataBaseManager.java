@@ -11,8 +11,8 @@ import java.util.*;
 public class DataBaseManager {
 
     static final String DRIVER = "org.postgresql.Driver";
-    static final String DATABASE_URL = "jdbc:postgresql://pg:5432/studs";
-//    private static final String DATABASE_URL = "jdbc:postgresql://localhost:5432/postgres";
+//    static final String DATABASE_URL = "jdbc:postgresql://pg:5432/studs";
+    private static final String DATABASE_URL = "jdbc:postgresql://localhost:5432/postgres";
     private static String USERNAME;
     private static String PASSWORD;
     private static final String FILE_WITH_LOGIN_DATA = "login_data";
@@ -139,7 +139,7 @@ public class DataBaseManager {
                 PreparedStatement dragonKiller =
                         connection.prepareStatement("INSERT INTO dragon_killers(dragon_id, name, birthday, eyecolor,haircolor)" +
                                 "VALUES (currval('dragons_id_seq'), '" + killer.getName() + "', " +
-                                (killer.getBirthdayInFormat() == null ? "NULL":killer.getBirthdayInFormat()) + ", " + hairColor +
+                                (killer.getBirthdayInFormat() == null ? "NULL":"'"+killer.getBirthdayInFormat()+"'") + ", " + hairColor +
                                 ", " + eyeColor + ")");
                 dragonKiller.executeUpdate();
             }

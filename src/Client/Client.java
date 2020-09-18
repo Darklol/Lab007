@@ -85,7 +85,7 @@ public class Client {
                 String password = null;
                 while (!wrongInput) {
                     username = scanner.nextLine();
-                    if (username.equals(null) || username.length() > 20) {
+                    if (username == null || username.length() > 20) {
                         System.out.println("Длина имени пользователя должна быть от 0 до 20 символов!");
                     } else {
                         wrongInput = true;
@@ -95,7 +95,7 @@ public class Client {
                 System.out.println("Введите пароль");
                 while (!wrongInput) {
                     password = scanner.nextLine();
-                    if (username.equals(null) || username.length() > 20) {
+                    if (password == null || password.length() > 20) {
                         System.out.println("Длина пароля должна быть от 0 до 20 символов!");
                     } else {
                         wrongInput = true;
